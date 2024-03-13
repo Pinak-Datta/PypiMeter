@@ -6,6 +6,10 @@ PypiMeter is a web application built using Streamlit that provides statistics an
 
 PypiMeter fetches data from the PyPI Stats API to display various statistics including recent downloads, overall downloads, system stats, and Python version stats for a given Python package. It allows users to input the package name and view the relevant statistics in an interactive and user-friendly manner.
 
+<p>
+  <a href="https://imgur.com/AOGi7GX"><img src="https://i.imgur.com/AOGi7GX.png" title="source: imgur.com" /></a>
+</p>
+
 ## Features
 
 - **Recent Download Stats:** Displays the recent download statistics for the specified package.
