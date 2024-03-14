@@ -52,7 +52,7 @@ if button_flag == 1:
     with open('recent_stats.json', 'r') as file:
         recent_data = json.load(file)
     for period, count in recent_data['data'].items():
-        st.write(f"Last {period.capitalize()}: {count}")
+        st.write(f"{period.capitalize()}: {count}")
 
     st.write("\n\n")
 
