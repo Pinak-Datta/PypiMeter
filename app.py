@@ -22,6 +22,9 @@ user_input = st.text_input("Enter Pypi package name here:")
 button_flag = 0
 if st.button("Submit"):
     button_flag = 1
+    if user_input == "":
+        st.warning("Please enter a package name!")
+        exit()
     # Call the method of the PyStatsAPI class
     recent_stats = pypi_api.call_api("recent", user_input)
     overall_stats = pypi_api.call_api("overall", user_input)
@@ -44,7 +47,6 @@ if st.button("Submit"):
     # st.write("Python Minor Stats:", python_minor_stats)
 if button_flag == 1:
     st.write("Searching Statistics for package:", user_input)
-
 
     # ---------- Recent Download Stats ----------
     st.subheader("Recent Download Stats:")
@@ -108,7 +110,9 @@ if button_flag == 1:
     df_pivot = df.pivot(index='date', columns='category', values='downloads')
 
     # Display line chart with legends
-    st.line_chart(df_pivot, use_container_width=True)st.text("")
+    st.line_chart(df_pivot, use_container_width=True)
+
+st.text("")
 st.text("")
 st.text("")
 st.text("")
