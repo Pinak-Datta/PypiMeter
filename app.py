@@ -108,9 +108,7 @@ if button_flag == 1:
     df_pivot = df.pivot(index='date', columns='category', values='downloads')
 
     # Display line chart with legends
-    st.line_chart(df_pivot, use_container_width=True)
-
-st.text("")
+    st.line_chart(df_pivot, use_container_width=True)st.text("")
 st.text("")
 st.text("")
 st.text("")
