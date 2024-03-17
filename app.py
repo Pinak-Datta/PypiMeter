@@ -16,12 +16,13 @@ pypi_api = PyStatsAPI()
 
 # Collect package name from user input
 user_input = st.text_input("Enter Pypi package name here:")
-
-
-# Execute backend.py with the user input
 button_flag = 0
+# Execute backend.py with the user input
 if st.button("Submit"):
     button_flag = 1
+    if user_input == "":
+        st.warning("Please enter a package name!")
+        exit()
     # Call the method of the PyStatsAPI class
     recent_stats = pypi_api.call_api("recent", user_input)
     overall_stats = pypi_api.call_api("overall", user_input)
@@ -43,73 +44,74 @@ if st.button("Submit"):
     # st.write("System Stats for Windows:", system_stats)
     # st.write("Python Minor Stats:", python_minor_stats)
 if button_flag == 1:
-    st.write("Searching Statistics for package:", user_input)
+    try:
+        st.write("Searching Statistics for package:", user_input)
 
+        # ---------- Recent Download Stats ----------
+        st.subheader("Recent Download Stats:")
+        # Load JSON data
+        with open('recent_stats.json', 'r') as file:
+            recent_data = json.load(file)
+        for period, count in recent_data['data'].items():
+            st.write(f"{period.capitalize()}: {count}")
 
-    # ---------- Recent Download Stats ----------
-    st.subheader("Recent Download Stats:")
-    # Load JSON data
-    with open('recent_stats.json', 'r') as file:
-        recent_data = json.load(file)
-    for period, count in recent_data['data'].items():
-        st.write(f"{period.capitalize()}: {count}")
+        st.write("\n\n")
 
-    st.write("\n\n")
+        # ---------- Overall Stats ----------
+        st.subheader("Overall Stats (With and Without Mirrors):")
+        # Load JSON data
+        with open('overall_stats.json', 'r') as file:
+            overall_data = json.load(file)
 
-    # ---------- Overall Stats ----------
-    st.subheader("Overall Stats (With and Without Mirrors):")
-    # Load JSON data
-    with open('overall_stats.json', 'r') as file:
-        overall_data = json.load(file)
+        # Convert JSON data to DataFrame
+        df = pd.DataFrame(overall_data['data'])
 
-    # Convert JSON data to DataFrame
-    df = pd.DataFrame(overall_data['data'])
+        # Convert date column to datetime format
+        df['date'] = pd.to_datetime(df['date'])
 
-    # Convert date column to datetime format
-    df['date'] = pd.to_datetime(df['date'])
+        # Pivot DataFrame to have 'date' as index and 'category' as columns
+        df_pivot = df.pivot(index='date', columns='category', values='downloads')
 
-    # Pivot DataFrame to have 'date' as index and 'category' as columns
-    df_pivot = df.pivot(index='date', columns='category', values='downloads')
+        # Display line chart with legends
+        st.line_chart(df_pivot, use_container_width=True)
 
-    # Display line chart with legends
-    st.line_chart(df_pivot, use_container_width=True)
+        # ---------- System Stats ----------
+        st.subheader("System Stats :")
+        # Load JSON data
+        with open('system_stats.json', 'r') as file:
+            system_data = json.load(file)
 
-    # ---------- System Stats ----------
-    st.subheader("System Stats :")
-    # Load JSON data
-    with open('system_stats.json', 'r') as file:
-        system_data = json.load(file)
+        # Convert JSON data to DataFrame
+        df = pd.DataFrame(system_data['data'])
 
-    # Convert JSON data to DataFrame
-    df = pd.DataFrame(system_data['data'])
+        # Convert date column to datetime format
+        df['date'] = pd.to_datetime(df['date'])
 
-    # Convert date column to datetime format
-    df['date'] = pd.to_datetime(df['date'])
+        # Pivot DataFrame to have 'date' as index and 'category' as columns
+        df_pivot = df.pivot(index='date', columns='category', values='downloads')
 
-    # Pivot DataFrame to have 'date' as index and 'category' as columns
-    df_pivot = df.pivot(index='date', columns='category', values='downloads')
+        # Display line chart with legends
+        st.line_chart(df_pivot, use_container_width=True)
 
-    # Display line chart with legends
-    st.line_chart(df_pivot, use_container_width=True)
+        # ---------- Python Stats ----------
+        st.subheader("Python Stats :")
+        # Load JSON data
+        with open('python_minor_stats.json', 'r') as file:
+            python_data = json.load(file)
 
-    # ---------- Python Stats ----------
-    st.subheader("Python Stats :")
-    # Load JSON data
-    with open('python_minor_stats.json', 'r') as file:
-        python_data = json.load(file)
+        # Convert JSON data to DataFrame
+        df = pd.DataFrame(python_data['data'])
 
-    # Convert JSON data to DataFrame
-    df = pd.DataFrame(python_data['data'])
+        # Convert date column to datetime format
+        df['date'] = pd.to_datetime(df['date'])
 
-    # Convert date column to datetime format
-    df['date'] = pd.to_datetime(df['date'])
+        # Pivot DataFrame to have 'date' as index and 'category' as columns
+        df_pivot = df.pivot(index='date', columns='category', values='downloads')
 
-    # Pivot DataFrame to have 'date' as index and 'category' as columns
-    df_pivot = df.pivot(index='date', columns='category', values='downloads')
-
-    # Display line chart with legends
-    st.line_chart(df_pivot, use_container_width=True)
-
+        # Display line chart with legends
+        st.line_chart(df_pivot, use_container_width=True)
+    except TypeError:
+        st.warning("Please enter a valid Pypi package name!")
 st.text("")
 st.text("")
 st.text("")
