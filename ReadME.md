@@ -27,11 +27,11 @@ To use [**PypiMeter**](https://pypimeter.streamlit.app/), simply input the name 
 
 If any invalid package name is provided (basically a package name that does not exist on PyPI library), it throws a relevant warning message!
 
-## Contributing 
+## ✏️ Contributing ✏️
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
 
-## License
+## 📜 License 📜
 
 This project is licensed under the [MIT License](LICENSE).
 
