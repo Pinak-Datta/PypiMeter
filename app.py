@@ -71,7 +71,7 @@ if submit_button == 1 and user_input != '':
 
  
 
-  st.success('Seacrh Complete!')
+  st.success('Search Complete!')
 
 
   # st.write("Recent Stats:", recent_stats)
