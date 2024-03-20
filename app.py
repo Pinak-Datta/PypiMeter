@@ -68,7 +68,11 @@ if submit_button == 1 and user_input != '':
         json.dump(python_minor_stats, outfile, indent=4)
 
 
-  st.success('Seacrh Complete!')
+
+ 
+
+  st.success('Search Complete!')
+
 
   # st.write("Recent Stats:", recent_stats)
   # st.write("Overall Stats with Mirrors:", overall_stats)
