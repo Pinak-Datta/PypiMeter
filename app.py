@@ -53,7 +53,7 @@ if submit_button == 1 and user_input != '':
         python_minor_stats = pypi_api.call_api("python_minor", user_input)
 
         if recent_stats is None:
-            st.write(f"Package '{user_input}' was not available on Pypi.")
+            st.warning(f"Package '{user_input}' was not available on Pypi.", icon="⚠️")
             none_flag = 1
         else:
             # Write JSON responses to files (optional)
@@ -66,7 +66,7 @@ if submit_button == 1 and user_input != '':
             with open("python_minor_stats.json", "w") as outfile:
                 json.dump(python_minor_stats, outfile, indent=4)
 
-    st.success('Done!')
+    st.success('Seacrh Complete!')
 
     # st.write("Recent Stats:", recent_stats)
     # st.write("Overall Stats with Mirrors:", overall_stats)
