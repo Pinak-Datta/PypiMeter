@@ -28,11 +28,11 @@ if "visibility" not in st.session_state:
 user_input = st.text_input("Enter Pypi package name here 👇", 
                            placeholder="For eg. numpy,   and then click Submit")
 
-if user_input == '':
-  st.warning("Input can't be empty", icon="⚠️")
 
 if st.button("Submit"):  # check if submit button was pressed
-  submit_button = 1
+    if user_input == '': 
+        st.warning("Input can't be empty", icon="⚠️")
+    submit_button = 1
 
 # Watch for Enter key press event
 
